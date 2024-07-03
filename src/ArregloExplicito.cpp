@@ -27,7 +27,7 @@ int* creaArregloNormal(int largo, double media, double desviacionEstandar){
     sort(arr, arr + largo);
     return arr;
 }
-//                               x elemento a buscar, n es el largo 
+//Busqueda binaria tradicional, donde x es el elemento a buscar, n es el largo 
 int busquedaBinaria(int* arreglo, int x, int n) {
     int izq = 0, der = n - 1;
     while (izq <= der) {
@@ -42,6 +42,7 @@ int busquedaBinaria(int* arreglo, int x, int n) {
     return -1;
 }
 
+//Imprime un arreglo de largo largo. 
 void imprimeArreglo(int* arreglo, int largo){
     for(int i = 0; i < largo; i++){
         cout << arreglo[i] << " ";

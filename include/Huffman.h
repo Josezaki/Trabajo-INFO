@@ -11,6 +11,7 @@
 struct simboloFrec{
     int valor = -1;
     float frecuencia;
+    int indice;
     simboloFrec* izq;
     simboloFrec* der;
 };
@@ -21,10 +22,12 @@ struct simboloCod{
     std::vector<bool> codification;
 };
 
+//simboloCodChar es una estructura que contiene un simbolo y char asociado obtenido mediante codificacion
 struct simboloCodChar{
     int simbolo;
     unsigned char representacion;
 };
+
 
 struct CompareSimboloFrec{
     bool operator()(simboloFrec* const& n1, simboloFrec* const& n2){
@@ -44,8 +47,9 @@ void codificationHuffman(simboloFrec *huffmanTree, std::vector<simboloCod> &codi
 std::vector<simboloCodChar> traducir(std::vector<simboloCod> simboloCod);
 std::unordered_map<unsigned char, int> CreateHash(std::vector<simboloCodChar> simboloCodChar);
 
-unsigned char* transformarGCaGCHuffman(int* GC, std::vector<simboloCodChar> &simboloCodChar, int n);
-int busquedaBinariaSample_GCHuffman(unsigned char* GCHuffman, int* Sample, int x, int n, int m, int b, std::unordered_map<unsigned char, int> &decodificar);
-int busquedaLinealAcotadaGCHuffman(unsigned char* GCHuffman, int x, int n, int indice, int elemento_acotado, std::unordered_map<unsigned char, int> &decodificar);
+int busquedaBinariaSample_GCHuffman(unsigned char* GCHuffman, int* Sample, int x, int n, int m, int b, std::unordered_map<unsigned char, int> &decodificar, std::unordered_map<int, int> outliers);
+int busquedaLinealAcotadaGCHuffman(unsigned char* GCHuffman, int x, int n, int indice, int elemento_acotado, std::unordered_map<unsigned char, int> &decodificar, std::unordered_map<int, int> outliers);
+unsigned char* transformarGCaGCHuffman(int* GC, std::vector<simboloCodChar> &simboloCodChar, int n, std::unordered_map<int, int> outliers);
 
+std::unordered_map<int, int> encuentraOutliers(std::vector<simboloFrec> &frecuenciaGC);
 #endif

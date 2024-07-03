@@ -12,18 +12,20 @@ int main(int argc, char** argv){
     }
 
     //------------------VALORES PARA INICIALIZAR EL PROGRAMA----------------------------
+
     int n = atoi(argv[1]); // Tamaño del arreglo
     if (n < 2){
         printf("n debe ser mayor a 1\n");
         exit(EXIT_FAILURE);
     }
     int sd = atof(argv[2]); // Desviación estandar
-    int media = 1e8;
+    int media = 1e8;        // Media utilizada
 
 
     Experimentacion exp; // creamos un objeto de nuestra clase experimentación definida en experimentacion.h
 
     //------------------------ EXPERIMENTACION RAM ARREGLO LINEAL ----------------------------
+    
     if(EXP){
         printf("Uso de Ram del arreglo con dist Lineal\n");
         exp.tomaMarcaIniRam();
@@ -34,13 +36,14 @@ int main(int argc, char** argv){
     }
 
     //imrpimimos el arreglo lineal si PRINT = 1
-    if (PRINT){
+    if (PRINT==0){
         cout << "Arreglo Lineal: ";         
         imprimeArreglo(arregloLineal, n);
     }
 
 
     //------------------------- EXPERIMENTACION RAM ARRELGO NORMAL ---------------------------
+    
     if(EXP){
         printf("Uso de Ram del arreglo con dist Normal\n");
         exp.tomaMarcaIniRam();
@@ -52,7 +55,7 @@ int main(int argc, char** argv){
     }
     
     // imprimimos el arreglo 
-    if (PRINT){
+    if (PRINT==0){
         cout << "Arreglo Normal: ";         
         imprimeArreglo(arregloNormal, n);
     }
@@ -79,17 +82,24 @@ int main(int argc, char** argv){
     }
     
     // --------------------------CREAR SAMPLE---------------------------
+
     double logaritmo = log2(n);
     int m = static_cast<int>(ceil(logaritmo));
     int b = n/m; 
     int *arregloSampleLineal = creaSample(arregloLineal, n, m, b);
     int *arregloSampleNormal = creaSample(arregloNormal, n, m, b);
 
-    // -----------------------Frecuencia de los arreglos GC-------------------------
+    // -----------------------Frecuencia y Outliers de los arreglos GC-------------------------
+
     vector<simboloFrec> frecuenciaGCLineal = frecuenciaGC(arregloGCLineal, n);
     vector<simboloFrec> frecuenciaGCNormal = frecuenciaGC(arregloGCNormal, n);
 
+    unordered_map<int, int> outliersLineal = encuentraOutliers(frecuenciaGCLineal);
+    unordered_map<int, int> outliersNormal = encuentraOutliers(frecuenciaGCNormal);
+
+
     //-------------------------CREAR CODIFICACION HUFFMAN-----------------
+
     vector<simboloCod> simboloCodLineal = crearCodificacionHuffman(frecuenciaGCLineal);
     if (PRINT){
         cout << "\nSimboloCodLineal\n";
@@ -117,19 +127,23 @@ int main(int argc, char** argv){
     }
 
     // -------------------Traduccion de simboloCod a simboloCodChar--------------------------
+
     vector<simboloCodChar> simboloCodCharLineal = traducir(simboloCodLineal);
     vector<simboloCodChar> simboloCodCharNormal = traducir(simboloCodNormal);
 
     // -------------------------------Decodificacion-------------------------------------- 
+
     unordered_map<unsigned char, int> decodificacionLineal = CreateHash(simboloCodCharLineal);
     unordered_map<unsigned char, int> decodificacionNormal = CreateHash(simboloCodCharNormal);
-    
+
     // --------------------------EXPERIMENTACION GC LINEAL CODIFICADO A HUFFMAN-----------------
     if(EXP){
         printf("Uso de Ram de transformar arreglo GC lineal a GC codficado por Huffman\n");
         exp.tomaMarcaIniRam();
     }
-    unsigned char* arregloGCHuffmanLineal = transformarGCaGCHuffman(arregloGCLineal, simboloCodCharLineal, n);
+    
+
+    unsigned char* arregloGCHuffmanLineal = transformarGCaGCHuffman(arregloGCLineal, simboloCodCharLineal, n, outliersLineal);
     if(EXP){
         exp.imprimeRamUsada();
     }
@@ -139,33 +153,32 @@ int main(int argc, char** argv){
         printf("Uso de Ram de transformar arreglo GC normal a GC codificado por Huffman\n");
         exp.tomaMarcaIniRam();
     }
-    unsigned char* arregloGCHuffmanNormal = transformarGCaGCHuffman(arregloGCNormal, simboloCodCharNormal, n);
+    unsigned char* arregloGCHuffmanNormal = transformarGCaGCHuffman(arregloGCNormal, simboloCodCharNormal, n, outliersNormal);
     if(EXP){
         exp.imprimeRamUsada();
     }
-    
-    //IMPRIMIR GC LINEAL 
-    if (PRINT){
-        cout << "GC Lineal: ";         
-        imprimeArreglo(arregloGCLineal, n);
-    }
+
 
     //--------------------------- BUSQUEDA BINARIA MANUAL CON GAP CODING CODIFICADO -------------------- 
+    
     int num;
-    if (PRINT){
-
-        do{
+    if (PRINT==0){
+        cout << "Arreglo Lineal: ";
+        imprimeArreglo(arregloLineal, n);
+        do{    
             cout << "Busqueda binaria GC Codificado del arreglo Lineal, Ingrese número: "<< endl;
             cin >> num;
-            cout << "Indice del elemento: " << busquedaBinariaSample_GCHuffman(arregloGCHuffmanLineal, arregloSampleLineal, num, n, m, b, decodificacionLineal) << endl;
+            cout << "Indice del elemento: " << busquedaBinariaSample_GCHuffman(arregloGCHuffmanLineal, arregloSampleLineal, num, n, m, b, decodificacionLineal, outliersLineal) << endl;
         }while (num != -1);
     }
 
-    if (PRINT){
-        do{
+    if (PRINT==0){
+        cout << "Arreglo Normal: ";
+        imprimeArreglo(arregloNormal, n);
+        do{       
             cout << "Busqueda binaria GC Codificado del arreglo Normal, Ingrese número: "<< endl;
             cin >> num;
-            cout << "Indice del elemento: " << busquedaBinariaSample_GCHuffman(arregloGCHuffmanNormal, arregloSampleNormal, num, n, m, b, decodificacionNormal) << endl;
+            cout << "Indice del elemento: " << busquedaBinariaSample_GCHuffman(arregloGCHuffmanNormal, arregloSampleNormal, num, n, m, b, decodificacionNormal, outliersNormal) << endl;
         }while (num != -1);
     }
 
@@ -210,20 +223,22 @@ int main(int argc, char** argv){
     exp.imprimeTiempo();
 
     // ----------------------- EXPERIMENTACIÓN PARA EL GAP CODING CODIFICADO CON DIST LINEAL ----------------------------------------
+    
     printf("Experimentación de búsqueda para el Gap Coding Codificado con dist Lineal\n");
     exp.tomaIniTiempo();
     for (int i = 0; i < REP; ++i){
         num = arregloLineal[0] + rand() % (arregloLineal[n-1] - arregloLineal[0] + 1) ;
-        busquedaBinariaSample_GCHuffman(arregloGCHuffmanLineal, arregloSampleLineal, num, n, m, b, decodificacionLineal);
+        busquedaBinariaSample_GCHuffman(arregloGCHuffmanLineal, arregloSampleLineal, num, n, m, b, decodificacionLineal, outliersLineal);
     }
     exp.imprimeTiempo();
 
     // ----------------------- EXPERIMENTACIÓN PARA EL GAP CODING CODIFICADO CON DIST NORMAL ----------------------------------------
+    
     printf("Experimentación de búsqueda para el Gap Coding Codificado con dist Normal\n");    
     exp.tomaIniTiempo();
     for (int i = 0; i < REP; ++i){
         num = arregloNormal[0] + rand() % (arregloNormal[n-1] - arregloNormal[0] + 1);
-        busquedaBinariaSample_GCHuffman(arregloGCHuffmanNormal, arregloSampleNormal, num, n, m, b, decodificacionNormal);
+        busquedaBinariaSample_GCHuffman(arregloGCHuffmanNormal, arregloSampleNormal, num, n, m, b, decodificacionNormal, outliersNormal);
     }
     exp.imprimeTiempo();
 
