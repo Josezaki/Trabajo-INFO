@@ -17,3 +17,10 @@ Se debe crear la carpeta bin y la carpeta out.
 ```
 
 donde n debe ser mayor que 2.
+
+<h3> Experimentacion </h3>
+Para realizar la prueba de experimentacion se necesita modificar el archivo Experimentacion.h, en la linea 10
+  y definir: 'EXP 1', estas se mostraran en la consola.
+
+<h3> Pruebas </h3>
+Para realizar pruebas debe modificar el archivo Experimentacion.h, en la linea 8 y definir: 'PRINT 1', estas se mostraran en la consola.
