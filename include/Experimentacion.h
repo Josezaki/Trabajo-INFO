@@ -5,7 +5,7 @@
 #include <sys/resource.h>   // Utilizado para medir la memoria RAM utilizada en ejecución
 #include <cstdio>
 
-#define PRINT 1
+#define PRINT 0
 #define REP 10000
 #define EXP 1
 

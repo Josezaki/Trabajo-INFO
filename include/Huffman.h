@@ -49,7 +49,6 @@ std::unordered_map<unsigned char, int> CreateHash(std::vector<simboloCodChar> si
 
 int busquedaBinariaSample_GCHuffman(unsigned char* GCHuffman, int* Sample, int x, int n, int m, int b, std::unordered_map<unsigned char, int> &decodificar, std::unordered_map<int, int> outliers);
 int busquedaLinealAcotadaGCHuffman(unsigned char* GCHuffman, int x, int n, int indice, int elemento_acotado, std::unordered_map<unsigned char, int> &decodificar, std::unordered_map<int, int> outliers);
-unsigned char* transformarGCaGCHuffman(int* GC, std::vector<simboloCodChar> &simboloCodChar, int n, std::unordered_map<int, int> outliers);
+unsigned char* transformarGCaGCHuffman(int* GC, std::vector<simboloCodChar> &simboloCodChar, int n, std::unordered_map<int, int> &outliers, std::vector<simboloFrec> frecuenciaGC);
 
-std::unordered_map<int, int> encuentraOutliers(std::vector<simboloFrec> &frecuenciaGC);
 #endif
