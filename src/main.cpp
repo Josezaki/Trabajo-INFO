@@ -58,6 +58,7 @@ int main(int argc, char** argv){
     if (PRINT){
         cout << "Arreglo Normal: ";         
         imprimeArreglo(arregloNormal, n);
+        
     }
 
     // --------------------- VARIABLES PARA LA CREACION DEL SAMPLE ------------------

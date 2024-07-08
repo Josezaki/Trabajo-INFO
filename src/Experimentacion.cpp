@@ -30,6 +30,6 @@ void Experimentacion::tomaIniTiempo() {
 // Toma una marca del tiempo en un momento x. Compara con el inicial e imprime en nanosegundos
 void Experimentacion::imprimeTiempo() {
     this->fin_tiempo = chrono::high_resolution_clock::now();
-    auto elapsed_time = chrono::duration_cast<chrono::nanoseconds>(fin_tiempo - ini_tiempo);
-    printf("Buscar en la estructura %0.d veces en promedio llevó un tiempo medio de: %0.f nanosegundos\n\n", REP, (double)elapsed_time.count() / REP);
+    auto tiempo_transcurrido = chrono::duration_cast<chrono::nanoseconds>(fin_tiempo - ini_tiempo);
+    printf("Buscar en la estructura %0.d veces en promedio llevó un tiempo medio de: %0.f nanosegundos\n\n", REP, (double)tiempo_transcurrido.count() / REP);
 }
