@@ -180,7 +180,7 @@ int main(int argc, char** argv){
     }
 
     //------------------------ EXPERIMENTACIÓN DE TIEMPOS DE BÚSQUEDA ----------------------------------------
-    //int num;
+  
     // ----------------------- EXPERIMENTACIÓN PARA EL ARREGLO CON DIST LINEAL ----------------------------------------
 
     printf("Experimentación de búsqueda para el Arreglo con dist Lineal\n");
