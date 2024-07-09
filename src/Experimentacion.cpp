@@ -1,6 +1,4 @@
 #include "Experimentacion.h"
-#include <iostream> // Para std::cout y std::endl
-
 using namespace std;
 
 // Constructor

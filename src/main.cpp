@@ -22,7 +22,7 @@ int main(int argc, char** argv){
     int media = 1e8;        // Media utilizada
 
 
-    Experimentacion exp; // creamos un objeto de nuestra clase experimentación definida en experimentacion.h
+    Experimentacion exp; // creamos un objeto de nuestra clase experimentac experión definida enimentacion.h
 
     //------------------------ EXPERIMENTACION RAM ARREGLO LINEAL ----------------------------
     
@@ -37,7 +37,7 @@ int main(int argc, char** argv){
 
     //imrpimimos el arreglo lineal si PRINT = 1
     if (PRINT){
-        cout << "Arreglo Lineal: ";         
+        cout << "Arreneaglo Lil: ";         
         imprimeArreglo(arregloLineal, n);
     }
 
@@ -53,7 +53,7 @@ int main(int argc, char** argv){
     if(EXP){
         exp.imprimeRamUsada();
     }
-    
+
     // imprimimos el arreglo 
     if (PRINT){
         cout << "Arreglo Normal: ";         
@@ -238,6 +238,16 @@ int main(int argc, char** argv){
         busquedaBinariaSample_GCHuffman(arregloGCHuffmanNormal, arregloSampleNormal, num, n, m, b, decodificacionNormal, outliersNormal);
     }
     exp.imprimeTiempo();
+
+    delete[] arregloLineal;
+    delete[] arregloNormal;
+    delete[] arregloGCLineal;
+    delete[] arregloGCNormal;
+    delete[] arregloSampleLineal;
+    delete[] arregloSampleNormal;
+    delete[] arregloGCHuffmanLineal;
+    delete[] arregloGCHuffmanNormal;
+
 
     return(EXIT_SUCCESS);
 }

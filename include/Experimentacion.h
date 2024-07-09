@@ -4,6 +4,7 @@
 #include <chrono>           // Utilizado para medir el tiempo que se demora en realizar las búsquedas
 #include <sys/resource.h>   // Utilizado para medir la memoria RAM utilizada en ejecución
 #include <cstdio>
+#include <iostream>
 
 #define PRINT 0
 #define REP 10000

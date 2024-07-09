@@ -60,11 +60,9 @@ vector<simboloCod> crearCodificacionHuffman(vector<simboloFrec> frecuenciaGC){
     vector<bool> aux;
     codificationHuffman(raiz, codificationNormal, aux);
 
-
     //retornamos los códigos con su codificacion
     return codificationNormal;
 }
-
 
 // crea el árbol de huffman siguiendo el algoritmo dado en clases
 simboloFrec* createHuffman(priority_queue <simboloFrec*, vector<simboloFrec*>, CompareSimboloFrec> &simbols){
